@@ -19,6 +19,6 @@ const threadSchema = new Schema({
   answers: [answerSchema]
 })
 
-const Thread = mongoose.model("thread", threadSchema)
+const Thread = mongoose.model("threads", threadSchema)
 
 module.exports = Thread

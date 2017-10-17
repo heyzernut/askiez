@@ -1,2 +1,15 @@
-<h1>Thread: {{currenThread.title}}</h1>
-<h3>{{currenThread.content}}</h3>
+<h1>Thread: {{currentThread.title}}</h1>
+<h4>{{currentThread.content}}</h4>
+---
+<h3>Replies:</h3>
+
+{{#each currentThread.answers}}
+<p>{{this.content}}</p>
+{{/each}}
+
+<form action="/thread/:idx" id="answer" method="post">
+  <input type="hidden" name="id" value={{currentThread._id}}>
+  <p>Reply:</p>
+  <textarea name="content" form="answer" rows="10" cols="40"></textarea>
+  <input type="submit">
+</form>

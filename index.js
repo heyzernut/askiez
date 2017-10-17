@@ -36,30 +36,25 @@ app.get("/", (req, res) => {
   })
 })
 
-// app.get("/threads", (req, res) => {
-//   res.send(Threads.title)
-// })
-
 app.get("/thread/:idx", (req, res) => {
-  // get animals
-  let thread = Thread.find({})
-
   //get array index from url parameter
   let threadIndex = req.params.idx
-
   //render page with data of the specified thread
   Thread.findById(threadIndex, (err, data) => {
-    let currenThread = data
-    console.log(currenThread)
+    // console.log(data)
     res.render("showThread", {
       title: "thread",
-      currenThread: currenThread
+      currentThread: data
     })
   })
 })
 
-app.post("/", (req, res) => {
-  //
+app.post("/thread/:idx", (req, res) => {
+  //get context
+  Thread.findById(req.body.id, (err, data) => {
+    data.answers.push({ content: req.body.content })
+    data.save()
+  })
 })
 
 // login page
@@ -73,7 +68,7 @@ app.post("/login", (req, res) => {
     if (err) console.log(err)
     return
   })
-  console.log("user added")
+  // console.log("user added")
 })
 
 //submit a question page
@@ -87,7 +82,7 @@ app.post("/thread", (req, res) => {
     if (err) console.log(err)
     return
   })
-  console.log(newThread)
+  // console.log(newThread)
 })
 
 //listening port
