@@ -5,6 +5,7 @@
 
 {{#each currentThread.answers}}
 <p>{{this.content}}</p>
+<h5>User: {{this.user}}</h5>
 {{/each}}
 
 <form action="/thread/:idx" id="answer" method="post">

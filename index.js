@@ -36,9 +36,9 @@ app.get("/", (req, res) => {
   })
 })
 
-app.get("/thread/:idx", (req, res) => {
+app.get("/thread/:id", (req, res) => {
   //get array index from url parameter
-  let threadIndex = req.params.idx
+  let threadIndex = req.params.id
   //render page with data of the specified thread
   Thread.findById(threadIndex, (err, data) => {
     // console.log(data)
@@ -53,7 +53,16 @@ app.post("/thread/:idx", (req, res) => {
   //get context
   Thread.findById(req.body.id, (err, data) => {
     data.answers.push({ content: req.body.content })
-    data.save()
+    data.save().then(() => {
+      // res.redirect(`/thread/${req.params.idx}`)
+      Thread.findById(req.body.id, (err, data) => {
+        // console.log(data)
+        res.render("showThread", {
+          title: "thread",
+          currentThread: data
+        })
+      })
+    })
   })
 })
 
